@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,12 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //public routes
+
+//auth
 Route::post('login',[AuthenticationController::class,'login']);
 Route::post('register',[AuthenticationController::class,'register']);
 
 
+
 //auth routes
 Route::middleware(['auth:sanctum'])->group(function(){
+    Route::post('logout', [AuthenticationController::class, 'logout']);
     
 });
 
