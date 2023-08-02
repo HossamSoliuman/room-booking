@@ -30,8 +30,10 @@ class RoomController extends Controller
      */
     public function store(StoreRoomRequest $request)
     {
-        $room = Room::create($request->validated());
-        $images = $request->validated('images');
+        $data = $request->validated();
+        $data['user_id'] = auth()->id();
+        $room = Room::create($data);
+        $images = $data['images'];
         foreach ($images as $image) {
             $path = $this->uploadFile($image, Room::PATH);
             $image::create([
@@ -50,6 +52,7 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
+        $room->load(['user', 'city', 'roomImages']);
         return $this->successResponse(RoomResource::make($room));
     }
 
@@ -62,6 +65,9 @@ class RoomController extends Controller
      */
     public function update(UpdateRoomRequest $request, Room $room)
     {
+        if (auth()->id() != $room->user_id) {
+            return $this->errorResponse('Unauthorized action', 401);
+        }
         $room->update($request->validated());
         return $this->successResponse(RoomResource::make($room));
     }
@@ -74,6 +80,9 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
+        if (auth()->id() != $room->user_id) {
+            return $this->errorResponse('Unauthorized action', 401);
+        }
         $room->delete();
         return $this->deletedResponse();
     }

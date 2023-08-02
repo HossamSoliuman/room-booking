@@ -15,15 +15,15 @@ class RoomResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'=> $this->id,
-			'activated'=> $this->activated,
-			'title'=> $this->title,
-			'description'=> $this->description,
-			'city_id'=> $this->city_id,
-			'location'=> $this->location,
-			'user_id'=> $this->user_id,
-			'price_per_day'=> $this->price_per_day,
-			'number_of_beds'=> $this->number_of_beds,
+            'id' => $this->id,
+            'activated' => $this->activated,
+            'title' => $this->title,
+            'description' => $this->description,
+            'city' => CityResource::make($this->city),
+            'location' => $this->location,
+            'user' => UserResource::make($this->whenLoaded('user')),
+            'price_per_day' => $this->price_per_day,
+            'number_of_beds' => $this->number_of_beds,
 
             'created_at' => $this->created_at,
             'last_update' => $this->updated_at,

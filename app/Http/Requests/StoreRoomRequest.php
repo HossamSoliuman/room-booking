@@ -29,7 +29,6 @@ class StoreRoomRequest extends FormRequest
             'description' => 'required|string',
             'city_id' => 'required|integer|exists:cities,id',
             'location' => 'required|string',
-            'user_id' => 'required|integer|exists:users,id',
             'price_per_day' => 'required|integer',
             'number_of_beds' => 'required|integer',
             'images' => 'required|array|max:7|min:1',
