@@ -38,8 +38,8 @@ class CrudGeneratore extends Command
         $fields = [];
         while ($isThereMore == 'yes') {
             $fieledType = $this->choice(
-                'choice field type ',
-                ['string', 'integer', 'text', 'foreignId'],
+                'Choice field type',
+                ['string', 'integer', 'text', 'foreignId', 'date', 'datetime'],
                 0
             );
             $fieledName = $this->ask('Enter field name', 'name');

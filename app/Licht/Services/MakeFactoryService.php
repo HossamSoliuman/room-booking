@@ -9,14 +9,18 @@ class MakeFactoryService
         $fileName = $model . 'Factory.php';
         $columns = '';
         foreach ($fields as $fieldName => $fieldType) {
-            if($fieldType=='string'){
-                $columns .= "\t\t\t'{$fieldName}'=>fake()->text(50),\n";
-            }else if($fieldType=='text'){
-                $columns .= "\t\t\t'{$fieldName}'=>fake()->text(),\n";
-            }else if($fieldType=='foreignId'){
-                $columns .= "\t\t\t'{$fieldName}'=>fake()->numberBetween(1,10),\n";
-            }else if($fieldType=='integer'){
-                $columns .= "\t\t\t'{$fieldName}'=>fake()->numberBetween(50,200),\n";
+            if ($fieldType == 'string') {
+                $columns .= "\t\t\t'{$fieldName}' => fake()->text(50),\n";
+            } elseif ($fieldType == 'text') {
+                $columns .= "\t\t\t'{$fieldName}' => fake()->text(),\n";
+            } elseif ($fieldType == 'foreignId') {
+                $columns .= "\t\t\t'{$fieldName}' => fake()->numberBetween(1, 10),\n";
+            } elseif ($fieldType == 'integer') {
+                $columns .= "\t\t\t'{$fieldName}' => fake()->numberBetween(50, 200),\n";
+            } elseif ($fieldType == 'date') {
+                $columns .= "\t\t\t'{$fieldName}' => fake()->date(),\n";
+            } elseif ($fieldType == 'datetime') {
+                $columns .= "\t\t\t'{$fieldName}' => fake()->dateTime(),\n";
             }
         }
         $stub = file_get_contents(__DIR__ . '/../mystubs/factory.stub');

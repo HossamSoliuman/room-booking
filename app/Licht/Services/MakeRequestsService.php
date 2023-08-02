@@ -21,14 +21,22 @@ class MakeRequestsService
         $updateRules = '';
         foreach ($fields as $fieldName => $fieldType) {
             if ($fieldType == 'foreignId') {
-                $table=$this->getForeignKeyTable($fieldName);
+                $table = $this->getForeignKeyTable($fieldName);
                 $storeRules .= "\t\t\t'{$fieldName}' => 'required|integer|exists:{$table},id',\n";
                 $updateRules .= "\t\t\t'{$fieldName}' => 'nullable|integer|exists:{$table},id',\n";
                 continue;
-            } 
+            }
             if ($fieldType == 'text') {
                 $storeRules .= "\t\t\t'{$fieldName}' => 'required|string',\n";
                 $updateRules .= "\t\t\t'{$fieldName}' => 'nullable|string',\n";
+                continue;
+            } elseif ($fieldType == 'date') {
+                $storeRules .= "\t\t\t'{$fieldName}' => 'required|date',\n";
+                $updateRules .= "\t\t\t'{$fieldName}' => 'nullable|date',\n";
+                continue;
+            } elseif ($fieldType == 'datetime') {
+                $storeRules .= "\t\t\t'{$fieldName}' => 'required|date_time',\n";
+                $updateRules .= "\t\t\t'{$fieldName}' => 'nullable|date_time',\n";
                 continue;
             }
             $storeRules .= "\t\t\t'{$fieldName}' => 'required|{$fieldType}',\n";
