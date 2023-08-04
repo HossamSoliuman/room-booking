@@ -24,7 +24,6 @@ class UpdateRoomBookRequest extends FormRequest
     public function rules()
     {
         return [
-			'user_id' => 'nullable|integer|exists:users,id',
 			'room_id' => 'nullable|integer|exists:rooms,id',
 			'check_in' => 'nullable|date',
 			'check_out' => 'nullable|date',

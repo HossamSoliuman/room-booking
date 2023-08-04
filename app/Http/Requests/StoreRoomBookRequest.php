@@ -24,7 +24,6 @@ class StoreRoomBookRequest extends FormRequest
     public function rules()
     {
         return [
-			'user_id' => 'required|integer|exists:users,id',
 			'room_id' => 'required|integer|exists:rooms,id',
 			'check_in' => 'required|date',
 			'check_out' => 'required|date',

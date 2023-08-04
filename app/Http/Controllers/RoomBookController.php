@@ -6,6 +6,8 @@ use App\Models\RoomBook;
 use App\Http\Requests\StoreRoomBookRequest;
 use App\Http\Requests\UpdateRoomBookRequest;
 use App\Http\Resources\RoomBookResource;
+use App\Services\RoomBookingService;
+use Illuminate\Http\Response;
 
 class RoomBookController extends Controller
 {
@@ -19,7 +21,6 @@ class RoomBookController extends Controller
         $roomBooks = RoomBook::all();
         return $this->successResponse(RoomBookResource::collection($roomBooks));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -28,7 +29,14 @@ class RoomBookController extends Controller
      */
     public function store(StoreRoomBookRequest $request)
     {
-        $roomBook = RoomBook::create($request->validated());
+        $ValidData = $request->validated();
+        $ValidData['user_id'] = auth()->id();
+        $isDateValid = (new RoomBookingService)
+            ->checkBookingDate($ValidData['check_in'], $ValidData['check_out'], $ValidData['room_id']);
+        if (!$isDateValid) {
+            return $this->errorResponse('Invalid check-in or check-out dates. The selected range conflicts with another booked room.', Response::HTTP_FORBIDDEN);
+        }
+        $roomBook = RoomBook::create($ValidData);
         return $this->successResponse(RoomBookResource::make($roomBook));
     }
 
@@ -52,6 +60,14 @@ class RoomBookController extends Controller
      */
     public function update(UpdateRoomBookRequest $request, RoomBook $roomBook)
     {
+        $validatedData = $request->validated();
+
+        $roomBookingService = new RoomBookingService();
+        $isDateValid = $roomBookingService->checkBookingDate($validatedData['check_in'], $validatedData['check_out'], $validatedData['room_id']);
+
+        if (!$isDateValid) {
+            return $this->errorResponse('Invalid check-in or check-out dates. The selected range conflicts with another booked room.', Response::HTTP_FORBIDDEN);
+        }
         $roomBook->update($request->validated());
         return $this->successResponse(RoomBookResource::make($roomBook));
     }

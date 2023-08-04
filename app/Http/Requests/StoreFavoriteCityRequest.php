@@ -24,7 +24,6 @@ class StoreFavoriteCityRequest extends FormRequest
     public function rules()
     {
         return [
-			'user_id' => 'required|integer|exists:users,id',
 			'city_id' => 'required|integer|exists:cities,id',
 
         ];

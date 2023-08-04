@@ -14,7 +14,6 @@ class RoomBook extends Model
 			'room_id',
 			'check_in',
 			'check_out',
-
     ];
 
 
