@@ -8,6 +8,7 @@ use App\Http\Controllers\RoomBookController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomImageController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\UserController;
 use App\Models\RoomImage;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,10 @@ Route::post('register', [AuthenticationController::class, 'register']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::apiResource('room-books', RoomBookController::class)->except(['index']);
+    Route::get('users/rooms', [UserController::class, 'rooms']);
+    Route::get('users/favorite-cities', [UserController::class, 'favoriteCities']);
+    Route::get('users/book-marks', [UserController::class, 'bookMarks']);
+    Route::get('users/room-books', [UserController::class, 'roomBooks']);
     Route::apiResources(
         [
             'book-marks' => BookMarkController::class,
