@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Room;
+use App\Models\RoomBook;
+use App\Models\RoomImage;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -18,6 +21,8 @@ class UserSeeder extends Seeder
         User::factory(1)->create([
             'role' => 'admin',
         ]);
-        User::factory(10)->create();
+        User::factory(10)
+            ->has(Room::factory(6))
+            ->create();
     }
 }

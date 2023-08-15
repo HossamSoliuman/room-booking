@@ -16,8 +16,10 @@ trait ManagesFiles
     public function uploadFile($file, $directory)
     {
         $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $fileName = $originalName . '_' . time() . '.' . $file->extension();
-        $filePath = $file->move($directory, $fileName);
+        $fileName = $originalName . '_' . time() . '.' . $file->extension();   
+        $filePath = $directory . '/' . $fileName; 
+        $file->move(public_path($directory), $fileName);  
+        
         return $filePath;
     }
 

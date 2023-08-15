@@ -37,6 +37,7 @@ class RoomBookController extends Controller
             return $this->errorResponse('Invalid check-in or check-out dates. The selected range conflicts with another booked room.', Response::HTTP_FORBIDDEN);
         }
         $roomBook = RoomBook::create($ValidData);
+        $roomBook->load(['user','room']);
         return $this->successResponse(RoomBookResource::make($roomBook));
     }
 

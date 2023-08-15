@@ -15,11 +15,11 @@ class RoomBookResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'=> $this->id,
-			'user_id'=> $this->user_id,
-			'room_id'=> $this->room_id,
-			'check_in'=> $this->check_in,
-			'check_out'=> $this->check_out,
+            'id' => $this->id,
+            'user' => UserResource::make($this->whenLoaded('user')),
+            'room' => RoomResource::make($this->whenLoaded('room')),
+            'check_in' => $this->check_in,
+            'check_out' => $this->check_out,
 
             'created_at' => $this->created_at,
             'last_update' => $this->updated_at,

@@ -6,6 +6,7 @@ use App\Models\Room;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
 use App\Http\Resources\RoomResource;
+use App\Models\RoomImage;
 use App\Traits\ManagesFiles;
 
 class RoomController extends Controller
@@ -36,7 +37,7 @@ class RoomController extends Controller
         $images = $data['images'];
         foreach ($images as $image) {
             $path = $this->uploadFile($image, Room::PATH);
-            $image::create([
+            RoomImage::create([
                 'room_id' => $room->id,
                 'path' => $path,
             ]);

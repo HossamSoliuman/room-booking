@@ -24,7 +24,7 @@ class RoomResource extends JsonResource
             'user' => UserResource::make($this->whenLoaded('user')),
             'price_per_day' => $this->price_per_day,
             'number_of_beds' => $this->number_of_beds,
-
+            'images' => RoomImageResource::collection($this->whenLoaded('roomImages')),
             'created_at' => $this->created_at,
             'last_update' => $this->updated_at,
         ];
