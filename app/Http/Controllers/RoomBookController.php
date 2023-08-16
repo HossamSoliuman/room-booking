@@ -18,7 +18,7 @@ class RoomBookController extends Controller
      */
     public function index()
     {
-        $roomBooks = RoomBook::all();
+        $roomBooks = RoomBook::orderBy('id', 'desc')->paginate(15);
         return $this->successResponse(RoomBookResource::collection($roomBooks));
     }
     /**
@@ -37,7 +37,7 @@ class RoomBookController extends Controller
             return $this->errorResponse('Invalid check-in or check-out dates. The selected range conflicts with another booked room.', Response::HTTP_FORBIDDEN);
         }
         $roomBook = RoomBook::create($ValidData);
-        $roomBook->load(['user','room']);
+        $roomBook->load(['user', 'room']);
         return $this->successResponse(RoomBookResource::make($roomBook));
     }
 
