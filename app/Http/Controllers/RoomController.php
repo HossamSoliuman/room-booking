@@ -19,7 +19,7 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $rooms = Room::sortBy('id', 'desc')->paginate();
+        $rooms = Room::orderBy('id', 'desc')->paginate();
         return $this->successResponse(RoomResource::collection($rooms));
     }
 
