@@ -14,6 +14,7 @@ class BookMarkController extends Controller
         $data = $request->validated();
         $data['user_id'] = auth()->id();
         $bookMark = BookMark::create($data);
+        $bookMark->load('room');
         return $this->successResponse(BookMarkResource::make($bookMark));
     }
     

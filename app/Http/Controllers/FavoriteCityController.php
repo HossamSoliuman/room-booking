@@ -14,7 +14,7 @@ class FavoriteCityController extends Controller
     {
         $data = $request->validated();
         $data['user_id'] = auth()->id();
-        $favoriteCity = FavoriteCity::create($request->validated());
+        $favoriteCity = FavoriteCity::create($data);
         return $this->successResponse(FavoriteCityResource::make($favoriteCity));
     }
 

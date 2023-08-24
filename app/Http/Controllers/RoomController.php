@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Room;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
+use App\Http\Resources\RoomBookResource;
 use App\Http\Resources\RoomResource;
 use App\Models\RoomImage;
 use App\Traits\ManagesFiles;
@@ -86,5 +87,10 @@ class RoomController extends Controller
         }
         $room->delete();
         return $this->deletedResponse();
+    }
+    public function books(Room $room)
+    {
+        $room->load('roomBooks');
+        return $this->successResponse(RoomBookResource::collection($room->roomBooks));
     }
 }

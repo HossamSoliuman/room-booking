@@ -21,13 +21,13 @@ class UserController extends Controller
     }
     public function favoriteCities()
     {
-        $favoriteCities = FavoriteCity::where('user_id', auth()->id())->get();
+        $favoriteCities = FavoriteCity::with('city')->where('user_id', auth()->id())->get();
         return $this->successResponse(FavoriteCityResource::collection($favoriteCities));
     }
     public function bookMarks()
     {
         $bookMarks = BookMark::where('user_id', auth()->id())->get();
-        return $this->successResponse(BookMarkResource::collection($bookMarks));
+        return $this->successResponse(BookMarkResource::collection($bookMarks->load('user', 'room')));
     }
     public function roomBooks()
     {

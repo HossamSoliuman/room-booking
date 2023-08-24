@@ -22,22 +22,47 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-//public routes
 
-//auth
+//admin routes
+Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+    Route::apiResources(
+        [
+            'cities' => CityController::class,
+
+        ]
+    );
+    Route::apiResource('room-books', RoomBookController::class)->only(['index', 'show']);
+});
+
+//public routes
 Route::post('login', [AuthenticationController::class, 'login']);
 Route::post('register', [AuthenticationController::class, 'register']);
-
-
+//
+Route::prefix('room')->group(function () {
+    Route::get('books', [RoomController::class, 'books']);
+});
+Route::apiResources(
+    [
+        'cities' => CityController::class,
+        'rooms' => RoomController::class,
+    ],
+    [
+        'only' => ['index', 'show']
+    ]
+);
 
 //auth routes
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::apiResource('room-books', RoomBookController::class)->except(['index']);
-    Route::get('users/rooms', [UserController::class, 'rooms']);
-    Route::get('users/favorite-cities', [UserController::class, 'favoriteCities']);
-    Route::get('users/book-marks', [UserController::class, 'bookMarks']);
-    Route::get('users/room-books', [UserController::class, 'roomBooks']);
+    Route::apiResource('rooms',RoomController::class);
+    Route::prefix('users')->group(function () {
+        Route::get('rooms', [UserController::class, 'rooms']);
+        Route::get('favorite-cities', [UserController::class, 'favoriteCities']);
+        Route::get('book-marks', [UserController::class, 'bookMarks']);
+        Route::get('room-books', [UserController::class, 'roomBooks']);
+    });
+
     Route::apiResources(
         [
             'book-marks' => BookMarkController::class,
@@ -47,20 +72,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         ['store', 'destroy']
     );
     Route::apiResources(
+        [],
         [
-            'cities' => CityController::class,
-            'rooms' => RoomController::class,
-        ],
-        ['index', 'show']
-    );
-});
-
-//admin routes
-Route::middleware(['auth:sanctum', 'admin'])->group(function () {
-    Route::apiResources(
-        [
-            'cities' => CityController::class,
+            'only' => ['index', 'show']
         ]
     );
-    Route::apiResource('room-books', RoomBookController::class)->only(['index', 'show']);
 });

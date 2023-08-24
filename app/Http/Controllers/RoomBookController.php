@@ -62,9 +62,10 @@ class RoomBookController extends Controller
     public function update(UpdateRoomBookRequest $request, RoomBook $roomBook)
     {
         $validatedData = $request->validated();
-
+        $validatedData['check_in'] = $validatedData['check_in'] ?? $roomBook->check_in;
+        $validatedData['check_out'] = $validatedData['check_out'] ?? $roomBook->check_out;
         $roomBookingService = new RoomBookingService();
-        $isDateValid = $roomBookingService->checkBookingDate($validatedData['check_in'], $validatedData['check_out'], $validatedData['room_id']);
+        $isDateValid = $roomBookingService->checkBookingDate($validatedData['check_in'], $validatedData['check_out'], $roomBook->id);
 
         if (!$isDateValid) {
             return $this->errorResponse('Invalid check-in or check-out dates. The selected range conflicts with another booked room.', Response::HTTP_FORBIDDEN);

@@ -16,9 +16,8 @@ class FavoriteCityResource extends JsonResource
     {
         return [
             'id'=> $this->id,
-			'user_id'=> $this->user_id,
-			'city_id'=> $this->city_id,
-
+            'user' => UserResource::make($this->whenLoaded('user')),
+            'city' => CityResource::make($this->whenLoaded('city')),
             'created_at' => $this->created_at,
             'last_update' => $this->updated_at,
         ];

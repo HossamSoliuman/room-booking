@@ -25,7 +25,6 @@ class StoreFavoriteCityRequest extends FormRequest
     {
         return [
 			'city_id' => 'required|integer|exists:cities,id',
-
         ];
     }
 }
