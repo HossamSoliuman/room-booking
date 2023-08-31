@@ -6,6 +6,7 @@ use App\Http\Resources\BookMarkResource;
 use App\Http\Resources\FavoriteCityResource;
 use App\Http\Resources\RoomBookResource;
 use App\Http\Resources\RoomResource;
+use App\Http\Resources\UserResource;
 use App\Models\BookMark;
 use App\Models\FavoriteCity;
 use App\Models\Room;
@@ -33,5 +34,9 @@ class UserController extends Controller
     {
         $roomBooks = RoomBook::where('user_id', auth()->id())->get();
         return $this->successResponse(RoomBookResource::collection($roomBooks));
+    }
+    public function auth()
+    {
+        return $this->successResponse(UserResource::make(auth()->user()));
     }
 }

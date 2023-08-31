@@ -61,6 +61,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('favorite-cities', [UserController::class, 'favoriteCities']);
         Route::get('book-marks', [UserController::class, 'bookMarks']);
         Route::get('room-books', [UserController::class, 'roomBooks']);
+        Route::get('auth', [UserController::class, 'auth']);
     });
 
     Route::apiResources(
