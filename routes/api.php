@@ -32,6 +32,8 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
         ]
     );
     Route::apiResource('room-books', RoomBookController::class)->only(['index', 'show']);
+    Route::get('users', [UserController::class, 'index']);
+
 });
 
 //public routes

@@ -11,10 +11,16 @@ use App\Models\BookMark;
 use App\Models\FavoriteCity;
 use App\Models\Room;
 use App\Models\RoomBook;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        $users = User::paginate(10);
+        return $this->successResponse(UserResource::collection($users));
+    }
     public function rooms()
     {
         $rooms = Room::where('user_id', auth()->id())->orderBy('id', 'desc')->paginate();
