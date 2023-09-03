@@ -33,31 +33,13 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     );
     Route::apiResource('room-books', RoomBookController::class)->only(['index', 'show']);
     Route::get('users', [UserController::class, 'index']);
-
 });
-
-//public routes
-Route::post('login', [AuthenticationController::class, 'login']);
-Route::post('register', [AuthenticationController::class, 'register']);
-//
-Route::prefix('room')->group(function () {
-    Route::get('books', [RoomController::class, 'books']);
-});
-Route::apiResources(
-    [
-        'cities' => CityController::class,
-        'rooms' => RoomController::class,
-    ],
-    [
-        'only' => ['index', 'show']
-    ]
-);
 
 //auth routes
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::apiResource('room-books', RoomBookController::class)->except(['index']);
-    Route::apiResource('rooms',RoomController::class);
+    Route::apiResource('rooms', RoomController::class);
     Route::prefix('users')->group(function () {
         Route::get('rooms', [UserController::class, 'rooms']);
         Route::get('favorite-cities', [UserController::class, 'favoriteCities']);
@@ -81,3 +63,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
         ]
     );
 });
+//public routes
+Route::post('login', [AuthenticationController::class, 'login']);
+Route::post('register', [AuthenticationController::class, 'register']);
+//
+Route::prefix('room')->group(function () {
+    Route::get('books', [RoomController::class, 'books']);
+});
+Route::apiResources(
+    [
+        'cities' => CityController::class,
+        'rooms' => RoomController::class,
+    ],
+    [
+        'only' => ['index', 'show']
+    ]
+);
