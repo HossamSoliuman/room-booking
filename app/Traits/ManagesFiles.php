@@ -19,9 +19,7 @@ trait ManagesFiles
         $fileName = $originalName . '_' . time() . '.' . $file->extension();
         $filePath = $directory . '/' . $fileName;
         $file->move(public_path($directory), $fileName);
-
-        // Return the full path to the uploaded file
-        return public_path($filePath);
+        return asset($filePath);
     }
 
     /**

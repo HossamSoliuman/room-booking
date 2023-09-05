@@ -20,3 +20,4 @@ Route::get('api/auth/{provider}/callback', [SocialiteController::class, 'handleP
 Route::get('/', function () {
     return 'welcome';
 });
+Route::view('test', 'index');
